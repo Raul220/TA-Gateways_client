@@ -1,4 +1,4 @@
-import { Row, Col } from "antd";
+import { Row } from "antd";
 import React, { useState, useEffect, useContext } from "react";
 import Title1 from "../General/Titles/index";
 import Gateways from "../GatewaysList/index";

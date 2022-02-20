@@ -4,7 +4,6 @@ import { Field, ModalInfo, Data, StyledSwiper } from "./styles";
 import Title4 from "../General/Titles/index";
 
 const PeripheralsSwiper = (items) => {
-  console.log(items.items.length);
   return (
     <StyledSwiper>
       <h4>Peripherals:</h4>

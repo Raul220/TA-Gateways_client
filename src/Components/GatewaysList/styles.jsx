@@ -30,3 +30,7 @@ export const Anc = styled.a``;
 export const StyledSwiper = styled.div`
   margin-top: 20px;
 `;
+
+export const EditGatway = styled.div`
+  margin-top: 20px;
+`;

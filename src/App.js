@@ -1,11 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import Home from './Components/Home';
+import "./App.css";
+import Home from "./Components/Home/index";
+import { BrowserRouter as Router, Routes , Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <Home />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>      
+    </Router >
   );
-}
+};
 
 export default App;

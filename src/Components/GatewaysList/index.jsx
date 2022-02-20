@@ -8,22 +8,37 @@ import {
   ListHead,
   Anc,
   ModalInfo,
+  EditGatway,
 } from "./styles";
 import { IeOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import PeripheralSwiper from "./PeripheralSwiper";
+import GtwForm from "./GtwForm";
 
 const Gateways = ({ gateways }) => {
   const [items, setItems] = useState(gateways);
   const [showModal, setShowModal] = useState(false);
   const [itemModal, setItemModal] = useState(gateways[0]);
+  const [showEdit, setShowEdit] = useState(false);
 
   return (
     <StyledGatewaysList>
       <Modal
+        id="modalShow"
         title={itemModal.name}
         visible={showModal}
-        onOk={() => setShowModal(false)}
+        onOk={() => {
+          setShowModal(false);
+          setShowEdit(true);
+        }}
         onCancel={() => setShowModal(false)}
+        okButtonProps={{
+          children: "Custom OK",
+        }}
+        cancelButtonProps={{
+          children: "Custom cancel",
+        }}
+        okText="Edit"
+        cancelText="Cancel"
         width={800}
       >
         <ModalInfo>
@@ -34,9 +49,7 @@ const Gateways = ({ gateways }) => {
           <Field>Ipv4: </Field>
           <Data>{itemModal.ipv4}</Data>
         </ModalInfo>
-
-        <PeripheralSwiper items={itemModal.peripherals}/>
-
+        <PeripheralSwiper items={itemModal.peripherals} />
       </Modal>
       <ListHead>
         <Button
