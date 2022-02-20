@@ -23,6 +23,8 @@ export const Data = styled.span`
 
 export const ListHead = styled.div``;
 
+export const Flex = styled.div``;
+
 export const ModalInfo = styled.div``;
 
 export const Anc = styled.a``;
@@ -33,4 +35,11 @@ export const StyledSwiper = styled.div`
 
 export const EditGatway = styled.div`
   margin-top: 20px;
+`;
+
+export const StyledForm = styled.div`
+  margin-top: 20px;
+`;
+
+export const StyledInsert = styled.div`
 `;
