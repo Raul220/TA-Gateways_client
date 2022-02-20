@@ -7,7 +7,6 @@ import ModalPer from "./peripheralModal";
 const GtwForm = (item) => {
   const [form] = Form.useForm();
   const [availableSubmit, setAvailableSubmit] = useState(false);
-  const [modal, setModal] = useState(false);
 
   const validateMessages = {
     required: "${label} is required!",
@@ -16,13 +15,17 @@ const GtwForm = (item) => {
 
   return (
     <StyledForm>
-        <ModalPer />
       <Form
         form={form}
         name="control-hooks"
         style={{ width: 700 }}
         validateMessages={validateMessages}
-      >
+      >        
+      <Form.Item style={{ marginTop: 15 }}>
+        <Button disabled={!availableSubmit} type="primary">
+          Submit
+        </Button>
+      </Form.Item>
         <Form.Item name="serial" label="Serial" rules={[{ required: true }]}>
           <Input
             placeholder="Serial"
@@ -52,13 +55,8 @@ const GtwForm = (item) => {
             defaultValue={item.item !== "" ? item.item.ipv4 : ""}
           />
         </Form.Item>
-        
-        <Form.Item style={{ marginTop: 15 }}>
-          <Button disabled={!availableSubmit} type="primary">
-            Submit
-          </Button>
-        </Form.Item>
       </Form>
+        <ModalPer />
     </StyledForm>
   );
 };
