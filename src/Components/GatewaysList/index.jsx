@@ -10,9 +10,9 @@ import {
   ModalInfo,
   EditGatway,
 } from "./styles";
-import { IeOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import PeripheralSwiper from "./PeripheralSwiper";
-import GtwForm from "./GtwForm";
+import { Link } from "react-router-dom";
 
 const Gateways = ({ gateways }) => {
   const [items, setItems] = useState(gateways);
@@ -28,7 +28,6 @@ const Gateways = ({ gateways }) => {
         visible={showModal}
         onOk={() => {
           setShowModal(false);
-          setShowEdit(true);
         }}
         onCancel={() => setShowModal(false)}
         okButtonProps={{
@@ -52,13 +51,14 @@ const Gateways = ({ gateways }) => {
         <PeripheralSwiper items={itemModal.peripherals} />
       </Modal>
       <ListHead>
-        <Button
-          type="primary"
-          icon={<PlusCircleOutlined />}
-          onClick={() => setShowModal(true)}
-          size="large"
-          shape="circle"
-        />
+        <Link to="/add-gateway">
+          <Button
+            type="primary"
+            icon={<PlusCircleOutlined />}
+            size="large"
+            shape="circle"
+          />
+        </Link>
       </ListHead>
       <List
         itemLayout="vertical"

@@ -15,6 +15,7 @@ export const StyledImg = styled.img`
 
 export const Field = styled.span`
   color: #0c0d0e;
+  font-weight: 900;
 `;
 
 export const Data = styled.span`
@@ -22,6 +23,10 @@ export const Data = styled.span`
 `;
 
 export const ListHead = styled.div``;
+
+export const Flex = styled.div`
+  margin-bottom: 20px;
+`;
 
 export const ModalInfo = styled.div``;
 
@@ -34,3 +39,9 @@ export const StyledSwiper = styled.div`
 export const EditGatway = styled.div`
   margin-top: 20px;
 `;
+
+export const StyledForm = styled.div`
+  margin-top: 20px;
+`;
+
+export const StyledInsert = styled.div``;

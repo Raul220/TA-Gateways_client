@@ -1,26 +1,63 @@
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Modal } from "antd";
 import React, { useState } from "react";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { StyledForm } from "./styles";
+import ModalPer from "./peripheralModal";
 
 const GtwForm = (item) => {
   const [form] = Form.useForm();
-  console.log(item.item.name);
+  const [availableSubmit, setAvailableSubmit] = useState(false);
+
+  const validateMessages = {
+    required: "${label} is required!",
+    pattern: "${label} must be an IPv4!",
+  };
 
   return (
-    <Form form={form} name="control-hooks">
-      <Form.Item name="serial" label="Serial" rules={[{ required: true }]}>
-        <Input defaultValue={item.item.serial} />
+    <StyledForm>
+      <Form
+        form={form}
+        name="control-hooks"
+        style={{ width: 700 }}
+        validateMessages={validateMessages}
+      >        
+      <Form.Item style={{ marginTop: 15 }}>
+        <Button disabled={!availableSubmit} type="primary">
+          Submit
+        </Button>
       </Form.Item>
-      <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-        <Input defaultValue={item.item.name} />
-      </Form.Item>
-      <Form.Item name="ipv4" label="IpVa" rules={[{ required: true }]}>
-        <Input defaultValue={item.item.ipv4} />
-      </Form.Item>
-      <Button type="primary" icon={<PlusCircleOutlined />}>
-        Add Peripheral
-      </Button>
-    </Form>
+        <Form.Item name="serial" label="Serial" rules={[{ required: true }]}>
+          <Input
+            placeholder="Serial"
+            defaultValue={item.item !== "" ? item.item.serial : ""}
+          />
+        </Form.Item>
+        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+          <Input
+            placeholder="Name"
+            defaultValue={item.item !== "" ? item.item.name : ""}
+          />
+        </Form.Item>
+        <Form.Item
+          name="ipv4"
+          label="IpV4"
+          rules={[
+            { required: true },
+            {
+              pattern:
+                /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+              message: "It must be an IPv4",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Ipv4"
+            defaultValue={item.item !== "" ? item.item.ipv4 : ""}
+          />
+        </Form.Item>
+      </Form>
+        <ModalPer />
+    </StyledForm>
   );
 };
 
