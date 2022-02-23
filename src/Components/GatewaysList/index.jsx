@@ -18,7 +18,6 @@ const Gateways = ({ gateways }) => {
   const [items, setItems] = useState(gateways);
   const [showModal, setShowModal] = useState(false);
   const [itemModal, setItemModal] = useState(gateways[0]);
-  const [showEdit, setShowEdit] = useState(false);
 
   return (
     <StyledGatewaysList>
@@ -106,7 +105,7 @@ const Gateways = ({ gateways }) => {
                 </p>
                 <p>
                   <Field>Peripherals: </Field>
-                  <Data>{item.peripherals.lenght}</Data>
+                  <Data>{item.peripherals.length}</Data>
                 </p>
               </Card>
             </List.Item>
