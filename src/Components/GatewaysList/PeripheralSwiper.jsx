@@ -26,11 +26,11 @@ const PeripheralsSwiper = (items) => {
               </ModalInfo>
               <ModalInfo>
                 <Field>Created: </Field>
-                <Data>{item.created}</Data>
+                <Data>{item.created_at}</Data>
               </ModalInfo>
               <ModalInfo>
                 <Field>Status: </Field>
-                <Data color={item.status === 1 ? "green" : "red"}>
+                <Data color={item.status === 1 ? "#1890FF" : "#BFBFBF"}>
                   {item.status === 1 ? "ON" : "OFF"}
                 </Data>
               </ModalInfo>

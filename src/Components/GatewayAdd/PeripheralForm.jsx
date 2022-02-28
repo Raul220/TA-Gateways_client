@@ -1,38 +1,54 @@
 import {
-  Form,
   Input,
-  Button,
-  Modal,
-  Select,
+  Form,
   List,
+  message,
+  InputNumber,
+  Switch,
   Card,
-  InputNumber
+  Button,
 } from "antd";
 import React, { useState } from "react";
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { Data, Field, Flex, ModalInfo, StyledImg } from "./styles";
+import {
+  StyledForm,
+  Field,
+  Data,
+  ModalInfo,
+  StyledImg,
+} from "../GatewaysList/styles";
+import { Container } from "../Home/styles";
+import { DeleteOutlined } from "@ant-design/icons";
 
-const ModalPer = () => {
-  const [modal, setModal] = useState(false);
-  const [items, setItems] = useState([]);
-  const [selected, setSelected] = useState(1);
-  const { Option } = Select;
+const PrphForm = () => {
   const [form] = Form.useForm();
+  const [checked, setChecked] = useState(false);
+  const [uid, setUID] = useState("");
+  const [vendor, setVendor] = useState("");
+  const [items, setItems] = useState([]);
 
   const validateMessages = {
     required: "${label} is required!",
-    pattern: "${label} must be an IPv4!",
-    type: { number: "${label} must be a number!" },
   };
 
-  const savePeri = () => {
-    const item = {};
+  const isValidField = () => {
     form
       .validateFields()
       .then(() => {
+        localStorage.setItem("validatePeripheral", true);
+      })
+      .catch((error) => {
+        localStorage.setItem("validatePeripheral", false);
+      });
+  };
+
+  const savePeri = () => {
+    form
+      .validateFields()
+      .then(() => {
+        const item = {};
         item.uid = document.getElementById("uid").value;
         item.vendor = document.getElementById("vendor").value;
-        item.tatus = selected;
+        item.status = checked ? 1 : 0;
         let currentdate = new Date();
         item.created =
           currentdate.getDate() +
@@ -46,68 +62,74 @@ const ModalPer = () => {
           currentdate.getMinutes() +
           ":" +
           currentdate.getSeconds();
-        items.push(item);
-        document.getElementById("periForm").reset();
-        setModal(false);
+        setItems((items) => [...items, item]);
+        // debugger;
+        const gtw = JSON.parse(localStorage.getItem("Gateway"));
+        const peris = gtw.peripherals;
+        var it = peris.filter(function (item, index) {
+          return String(item.uid) === uid;
+        });
+        const per = {};
+        if (it) {
+          message.error("Already exist an Peripheral with this UID.");
+        } else {
+          per.uid = uid;
+          per.vendor = vendor;
+          per.status = checked ? 1 : 0;
+          peris.push(per);
+          gtw.peripherals = peris;
+          localStorage.setItem("Gateway", JSON.stringify(gtw));
+          document.getElementById("periForm").reset();
+          localStorage.setItem("validatePeripheral", true);
+        }
       })
-      .catch((errors) => alert("Invalid Fields"));
+      .catch((error) => {
+        message.error("Fix fields avlue");
+        // localStorage.setItem("validatePeripheral", false);
+      });
   };
 
+  const removePeri = (uid) => {
+    // debugger;
+    const li = document.getElementById(`listPeri${uid}`);
+    li.remove();
+    const gtw = JSON.parse(localStorage.getItem("Gateway"));
+    const arr = gtw.peripherals;
+    var i;
+    var it = arr.filter(function (item, index) {
+      i = index;
+      return String(item.uid) === uid;
+    });
+    if (!it) {
+      return false;
+    }
+    arr.splice(i, 1);
+    gtw.peripherals = arr;
+    localStorage.setItem("Gateway", JSON.stringify(gtw));
+  };
   return (
-    <Flex>
-      <Button
-        icon={<PlusCircleOutlined />}
-        type="ghost"
-        onClick={() => setModal(true)}
-      >
-        Add Peripheral
-      </Button>
-      <Modal
-        id="modalPeripheral"
-        title="Add Peripheral"
-        visible={modal}
-        onOk={() => {
-          savePeri();
-        }}
-        onCancel={() => setModal(false)}
-        okButtonProps={{
-          children: "Custom OK",
-        }}
-        cancelButtonProps={{
-          children: "Custom cancel",
-        }}
-        okText="Save"
-        // okButtonProps= {{disabled: !canSave}}
-        cancelText="Cancel"
-        width={800}
-      >
-        <Form
-          form={form}
-          name="peri"
-          id="periForm"
-          validateMessages={validateMessages}
-        >
-          <Form.Item name="uid" label="UID" rules={[{ required: true }]}>
-            <InputNumber min={1} placeholder="UID" id="uid" />
-          </Form.Item>
-          <Form.Item name="vendor" label="Vendor" rules={[{ required: true }]}>
-            <Input placeholder="Vendor" id="vendor" />
-          </Form.Item>
-          <Form.Item name="status" label="Status">
-            <Select
-              id="status"
-              defaultValue={1}
-              style={{ width: 120 }}
-              value={(value) => value}
-              onChange={(value) => setSelected(value)}
-            >
-              <Option value={0}>OFF</Option>
-              <Option value={1}>ON</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
-
+    <Container>
+      <Form form={form} name="peri" id="periForm">
+        <Form.Item name="uid" label="UID" rules={[{ required: true }]}>
+          <InputNumber
+            min={1}
+            placeholder="UID"
+            id="uid"
+            onChange={(e) => setUID(e)}
+          />
+        </Form.Item>
+        <Form.Item name="vendor" label="Vendor" rules={[{ required: true }]}>
+          <Input
+            placeholder="Vendor"
+            id="vendor"
+            onChange={(e) => setVendor(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item label={checked ? "ON" : "OFF"}>
+          <Switch onChange={() => setChecked(!checked)} />
+        </Form.Item>
+        <Button onClick={savePeri}>Add</Button>
+      </Form>
       <List
         style={{ marginTop: 20 }}
         itemLayout="vertical"
@@ -121,16 +143,19 @@ const ModalPer = () => {
         }
         renderItem={(item) => (
           <List.Item
-            key={item.uid}
+            id={`listPeri${item.uid}`}
             extra={
-              <StyledImg 
-              style={{width: 100}}
+              <StyledImg
+                style={{ width: 100 }}
                 alt="logo"
                 src="http://simpleicon.com/wp-content/uploads/pc.png"
               />
             }
           >
             <Card>
+              <Button type="ghost" onClick={() => removePeri(item.uid)}>
+                <DeleteOutlined />
+              </Button>
               <ModalInfo>
                 <Field>UID: </Field>
                 <Data>{item.uid}</Data>
@@ -145,14 +170,16 @@ const ModalPer = () => {
               </ModalInfo>
               <ModalInfo>
                 <Field>Status: </Field>
-                <Data>{item.status === 1 ? "ON" : "OFF"}</Data>
+                <Data color={item.status === 0 ? "#BFBFBF" : "#1890FF"}>
+                  {item.status === 1 ? "ON" : "OFF"}
+                </Data>
               </ModalInfo>
             </Card>
           </List.Item>
         )}
       />
-    </Flex>
+    </Container>
   );
 };
 
-export default ModalPer;
+export default PrphForm;

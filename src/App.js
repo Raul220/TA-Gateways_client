@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./Components/Home/index";
 import { BrowserRouter as Router, Routes , Route } from "react-router-dom";
-import AddGateway from "./Components/GatewaysList/addGtw";
+import AddGateway from "./Components/GatewayAdd/index";
 
 const App = () => {
   return (

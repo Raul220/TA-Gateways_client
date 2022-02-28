@@ -20,6 +20,7 @@ export const Field = styled.span`
 
 export const Data = styled.span`
   color: ${(props) => props.color && props.color};
+  font-weight: ${(props) => (props.color === '#BFBFBF' || props.color === '#1890FF') && '700' };
 `;
 
 export const ListHead = styled.div``;

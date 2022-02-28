@@ -1,0 +1,18 @@
+# Uncomment the following to prevent the httpoxy vulnerability
+# See: https://httpoxy.org/
+#<IfModule mod_headers.c>
+#    RequestHeader unset Proxy
+#</IfModule>
+
+<IfModule mod_rewrite.c>
+   RewriteEngine On  
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+RewriteRule ^ /index.html [L]
+</IfModule>
+#<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+#</IfModule>
+Header set Access-Control-Allow-Origin "*"
+Header Set Access-Control-Allow-Headers *

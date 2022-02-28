@@ -5,7 +5,6 @@ import Gateways from "../GatewaysList/index";
 import { Container, SpinContainer } from "./styles";
 // import { gateways } from "./data";
 import axios from "../../config";
-// import axios from "axios";
 import { Spin } from "antd";
 
 const Home = () => {
