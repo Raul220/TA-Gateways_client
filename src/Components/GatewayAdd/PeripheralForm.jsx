@@ -67,21 +67,18 @@ const PrphForm = () => {
         const gtw = JSON.parse(localStorage.getItem("Gateway"));
         const peris = gtw.peripherals;
         var it = peris.filter(function (item, index) {
+          let i = index;
           return String(item.uid) === uid;
         });
         const per = {};
-        if (it) {
-          message.error("Already exist an Peripheral with this UID.");
-        } else {
-          per.uid = uid;
-          per.vendor = vendor;
-          per.status = checked ? 1 : 0;
-          peris.push(per);
-          gtw.peripherals = peris;
-          localStorage.setItem("Gateway", JSON.stringify(gtw));
-          document.getElementById("periForm").reset();
-          localStorage.setItem("validatePeripheral", true);
-        }
+        per.uid = uid;
+        per.vendor = vendor;
+        per.status = checked ? 1 : 0;
+        peris.push(per);
+        gtw.peripherals = peris;
+        localStorage.setItem("Gateway", JSON.stringify(gtw));
+        document.getElementById("periForm").reset();
+        localStorage.setItem("validatePeripheral", true);
       })
       .catch((error) => {
         message.error("Fix fields avlue");
@@ -100,7 +97,7 @@ const PrphForm = () => {
       i = index;
       return String(item.uid) === uid;
     });
-    if (!it) {
+    if(!it){
       return false;
     }
     arr.splice(i, 1);
