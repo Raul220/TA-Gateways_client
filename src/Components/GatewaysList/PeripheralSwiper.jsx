@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import "swiper/css"
 import { Field, ModalInfo, Data, StyledSwiper } from "./styles";
-import Title4 from "../General/Titles/index";
+//import Title4 from "../General/Titles/index";
 
 const PeripheralsSwiper = (items) => {
   return (
