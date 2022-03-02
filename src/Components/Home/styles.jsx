@@ -6,5 +6,5 @@ export const Container = styled.div`
 
 export const SpinContainer = styled.div`
   text-align: center;
-  margin: 50% auto;
+  margin-top: 100px;
 `;
