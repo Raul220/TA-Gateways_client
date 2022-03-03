@@ -42,7 +42,8 @@ const PrphForm = () => {
   };
 
   const savePeri = () => {
-    form
+    if(items.length < 10) {
+      form
       .validateFields()
       .then(() => {
         const item = {};
@@ -84,6 +85,10 @@ const PrphForm = () => {
         message.error("Fix fields avlue");
         // localStorage.setItem("validatePeripheral", false);
       });
+    } else {
+      message.error('One gateway only can have 10 periferals.');
+    }
+    
   };
 
   const removePeri = (uid) => {
@@ -131,6 +136,12 @@ const PrphForm = () => {
         style={{ marginTop: 20 }}
         itemLayout="vertical"
         size="small"
+        pagination={{
+          onChange: (page) => {
+            console.log(page);
+          },
+          pageSize: 2,
+        }}
         dataSource={items}
         extra={
           <StyledImg

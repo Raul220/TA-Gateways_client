@@ -1,4 +1,4 @@
-import { Row } from "antd";
+import { Row, Skeleton } from "antd";
 import React, { useState, useEffect, useContext } from "react";
 import Title1 from "../General/Titles/index";
 import Gateways from "../GatewaysList/index";
@@ -33,7 +33,8 @@ const Home = () => {
         </>
       ) : (
         <SpinContainer>
-          <Spin size="large" />
+          <Skeleton active paragraph={{ rows: 3 }} />
+          <Skeleton style={{marginTop: 100}} active paragraph={{ rows: 3 }} />
         </SpinContainer>
       )}
     </Container>
