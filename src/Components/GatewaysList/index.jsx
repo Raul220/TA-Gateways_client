@@ -1,4 +1,4 @@
-import { Card, List, Button, Modal } from "antd";
+import { Card, List, Button, Modal, Tooltip, message, Popconfirm } from "antd";
 import React, { useState } from "react";
 import {
   StyledGatewaysList,
@@ -10,7 +10,8 @@ import {
   ModalInfo,
   EditGatway,
 } from "./styles";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import axios from "../../config";
 import PeripheralSwiper from "./PeripheralSwiper";
 import { Link } from "react-router-dom";
 
@@ -18,6 +19,21 @@ const Gateways = ({ gateways }) => {
   const [items, setItems] = useState(gateways);
   const [showModal, setShowModal] = useState(false);
   const [itemModal, setItemModal] = useState(gateways[0]);
+
+  const deleteGateway = (id) => {
+    // debugger;
+    axios
+      .post("/gateways/destroy", { id: id })
+      .then((response) => {
+        if (response.data.statusCode === 200) {
+          setItems(items.filter((item) => item.id !== id));
+          setShowModal(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <StyledGatewaysList>
@@ -39,6 +55,19 @@ const Gateways = ({ gateways }) => {
         cancelText="Cancel"
         width={800}
       >
+        <Popconfirm
+          title="Are you sure to delete this Gateway?"
+          onConfirm={() => deleteGateway(itemModal.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Tooltip title="Delete">
+            <Button>
+              <DeleteOutlined />
+            </Button>
+          </Tooltip>
+        </Popconfirm>
+
         <ModalInfo>
           <Field>Serial: </Field>
           <Data>{itemModal.serial}</Data>
