@@ -69,7 +69,7 @@ const AddGateway = () => {
                 .post("/peripherals/add", { data: item })
                 .then((response) => {
                   if (response.data.statusCode === 200) {
-                    window.location = `${rootURL}/`;
+                    window.location = rootURL;
                   }
                 })
                 .catch((err) => {

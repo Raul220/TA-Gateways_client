@@ -21,7 +21,7 @@ const Home = () => {
       .catch((err) => {
           console.log(err);
       });
-  }, [gateways]);
+  }, []);
   return (
     <Container>
       {gateways.length > 0 ? (

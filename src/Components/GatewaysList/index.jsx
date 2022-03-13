@@ -35,7 +35,7 @@ const Gateways = ({ gateways }) => {
         cancelButtonProps={{
           children: "Custom cancel",
         }}
-        okText={<Link to='gateways/edit/1'>Edit</Link>}
+        okText={<Link to={`edit-gateway/${itemModal.id}`}>Edit</Link>}
         cancelText="Cancel"
         width={800}
       >

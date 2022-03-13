@@ -21,7 +21,7 @@ const GtwForm = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [gateways]);
+  }, []);
 
   const validateMessages = {
     required: "${label} is required!",
