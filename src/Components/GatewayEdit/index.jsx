@@ -12,7 +12,7 @@ const EditGtw = () => {
       // debugger;
       const id= window.location.pathname.split('/')[2];
     axios
-      .post("/gateways/show", {id: id})
+      .post("/gateways/get-by-id", {id: id})
       .then((response) => {
         if(response.data) {
           setGateway(response.data.gateway);
